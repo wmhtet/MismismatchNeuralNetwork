@@ -19,7 +19,7 @@ class MMM{
     private static let COLUMN = 3
     private static let BOARD_SIZE = 12
     private static let TRAINING_DATA_FILE_NAME = "MMM_NN_TRAING_DATA"
-    private static let TRAINING_SIZE = 30000
+    private static let TRAINING_SIZE = 30000000
     private static let CARDS:[String] = {
         return MMM.createCards()
     }()
@@ -269,6 +269,8 @@ class MMM{
         
         func repeatGettingSolution()->String{
             var str = ""
+            let starttimestamp = NSDate().timeIntervalSince1970
+            print(starttimestamp)
             for i in 1...MMM.TRAINING_SIZE {
                 if i%1000 == 0{
                     print(".", terminator:"")
@@ -277,6 +279,8 @@ class MMM{
                 str += createInputOutputString( mmm.getBoardSet(), solutions:mmm.boardSolutionSet)
             }
             print("")
+            let stoptimestamp = NSDate().timeIntervalSince1970
+            print(stoptimestamp)
             return str
         }
         

@@ -2,6 +2,7 @@
 
 # Third-party libraries
 import numpy as np
+import random
 # import network
 
 
@@ -12,11 +13,18 @@ def load_data():
     for line in f:
         inout = line.rstrip().split(":")
         string_tuple_list.append((inout[0], inout[1]))
-
     f.close()
+    random.shuffle(string_tuple_list)
     training_data = []
-    for t in string_tuple_list[20002:300002]:
+    for t in string_tuple_list[20002:]:
         training_data.append((string_to_massaged_float_array(t[0]), string_to_out_put_index(t[1])))
+
+    """
+    w = open('../data/MASSAGED_DATA', 'w')
+    for l in training_data:
+        formatted_string = "{0} _:_ {1}\n".format(' '.join(map(str, l[0].flatten())), ' '.join(map(str, l[1].flatten())))
+        w.write(formatted_string)
+    w.close()  """
 
     validation_data = []
     for t in string_tuple_list[10001:20001]:
@@ -26,11 +34,12 @@ def load_data():
     for t in string_tuple_list[0:10000]:
         test_data.append((string_to_massaged_float_array(t[0]),  string_to_sorted_int_array(t[1])))
 
-    formatted = "{0} : \n {1} :   ".format(training_data[0][0],training_data[0][1], )
+    formatted = "{0} : \n {1} :   ".format(training_data[0][0], training_data[0][1], )
     formatted2 = "{0} : {1} : {2} ".format(np.shape(training_data), training_data[0][0].size, len(training_data[0][1]))
     # print (data_list[0])
     print(formatted)
     print(formatted2)
+    print(string_tuple_list[20002:20007])
     # training_data, validation_data, test_data = data_list, data_list[10001:20001], data_list[0:10000]
     # net = network.Network([input_length, 49, output_length])
     # net.SGD(training_data, 30, 10, 3.0, test_data=test_data)

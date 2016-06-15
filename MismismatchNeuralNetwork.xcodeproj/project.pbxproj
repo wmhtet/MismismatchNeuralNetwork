@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		64BCB3EF1D0F82CC000FEDE6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BCB3EE1D0F82CC000FEDE6 /* main.swift */; };
+		64BCB3F71D0F85EB000FEDE6 /* MisMisMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BCB3F51D0F85EB000FEDE6 /* MisMisMatch.swift */; };
+		64BCB3F81D0F85EB000FEDE6 /* NeuralNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BCB3F61D0F85EB000FEDE6 /* NeuralNet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,8 @@
 /* Begin PBXFileReference section */
 		64BCB3EB1D0F82CC000FEDE6 /* MismismatchNeuralNetwork */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MismismatchNeuralNetwork; sourceTree = BUILT_PRODUCTS_DIR; };
 		64BCB3EE1D0F82CC000FEDE6 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		64BCB3F51D0F85EB000FEDE6 /* MisMisMatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisMisMatch.swift; sourceTree = "<group>"; };
+		64BCB3F61D0F85EB000FEDE6 /* NeuralNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuralNet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,8 @@
 		64BCB3ED1D0F82CC000FEDE6 /* MismismatchNeuralNetwork */ = {
 			isa = PBXGroup;
 			children = (
+				64BCB3F51D0F85EB000FEDE6 /* MisMisMatch.swift */,
+				64BCB3F61D0F85EB000FEDE6 /* NeuralNet.swift */,
 				64BCB3EE1D0F82CC000FEDE6 /* main.swift */,
 			);
 			path = MismismatchNeuralNetwork;
@@ -120,6 +126,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				64BCB3EF1D0F82CC000FEDE6 /* main.swift in Sources */,
+				64BCB3F71D0F85EB000FEDE6 /* MisMisMatch.swift in Sources */,
+				64BCB3F81D0F85EB000FEDE6 /* NeuralNet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +249,7 @@
 				64BCB3F41D0F82CC000FEDE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
