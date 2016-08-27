@@ -17,6 +17,8 @@ import random
 import numpy as np
 
 
+
+
 class Network(object):
 
     def __init__(self, sizes):
@@ -63,7 +65,7 @@ class Network(object):
                 self.update_mini_batch(mini_batch, eta)
             if test_data:
                 print "Epoch {0}: {1} / {2}".format(
-                    j, self.evaluate_string(test_data), n_test)
+                    j, self.evaluate_multiple_solution(test_data), n_test)
             else:
                 print "Epoch {0} complete".format(j)
 
@@ -145,11 +147,37 @@ class Network(object):
         return sum(int(x == y) for (x, y) in test_results)
         # return 0, 0
 
+    def evaluate_multiple_solution(self, test_data):
+        """Return the number of test inputs for which the neural
+        network outputs the correct result. Note that the neural
+        network's output is assumed to be the index of whichever
+        neuron in the final layer has the highest activation."""
+        test_results = [  # (self.feedforward(x), y)
+            (sorted(self.feedforward(x).flatten().argsort()[-3:][::-1]), y)    # self.feedforward(x)
+                        for (x, y) in test_data]
+        # print(test_data[0:5])
+        print_list(test_results[0:5])
+        print_list(test_results[5000:5005])
+        print_list(test_results[9990:9995])
+        total = 0
+        for (x, y) in test_results:
+            t = (x[0], x[1], x[2])
+            # print(x)
+            if t in y:
+                total += 1
+        return total
+        # return 0, 0
+
+
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations."""
         return (output_activations-y)
 
+
+def print_list(ls):
+    for l in ls:
+        print(l)
 
 #### Miscellaneous functions
 def sigmoid(z):
