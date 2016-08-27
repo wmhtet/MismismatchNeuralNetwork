@@ -47,6 +47,7 @@ func testNot(){
 testNot()
 var mmm = MMM()
 mmm.setup()
+mmm.printBoardSet()
 func loop(){
     print("Please enter your input.. or \"q\" to quit")
     var theInput = input()

@@ -19,7 +19,7 @@ class MMM{
     private static let COLUMN = 3
     private static let BOARD_SIZE = 12
     private static let TRAINING_DATA_FILE_NAME = "MMM_NN_TRAING_DATA"
-    private static let TRAINING_SIZE = 30000000
+    private static let TRAINING_SIZE = 300000
     private static let CARDS:[String] = {
         return MMM.createCards()
     }()
@@ -156,7 +156,7 @@ class MMM{
         log("\(boardSolutionSet)")
         if(boardSolutionSet.count == 0){
             log("No solution. Running it again.")
-            setup()
+            //setup()
         }
     }
     
@@ -258,13 +258,13 @@ class MMM{
         let mmm = MMM()
         
         func createInputOutputString( board:String, solutions:Set<Set<Int>>)->String{
-            var str = ""
+            var str = "\(board):"
             for solution in solutions{
                 //var array = Array()
                 let solutionArray = solution.map{$0.description}.joinWithSeparator(" ")
-                str += "\(board):\(solutionArray)\n"
+                str += "\(solutionArray)|"
             }
-            return str
+            return str+"\n"
         }
         
         func repeatGettingSolution()->String{
@@ -314,7 +314,9 @@ class MMM{
             let strArry = text2.characters.split {$0 == "\n"}.map(String.init)
             for str in strArry {
                 var tmp = str.characters.split{$0 == ":"}.map(String.init)
-                solutions.append(( String(tmp[0].characters), String(tmp[1].characters)))
+                if tmp.count > 1 {
+                    solutions.append(( String(tmp[0].characters), String(tmp[1].characters)))
+                }
             }
             //print("\(solutions)")
         }catch {

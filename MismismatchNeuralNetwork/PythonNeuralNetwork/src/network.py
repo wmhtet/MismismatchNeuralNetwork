@@ -156,8 +156,11 @@ class Network(object):
             (sorted(self.feedforward(x).flatten().argsort()[-3:][::-1]), y)    # self.feedforward(x)
                         for (x, y) in test_data]
         # print(test_data[0:5])
+        # print_list(test_data[0:5])
         print_list(test_results[0:5])
+        print("---")
         print_list(test_results[5000:5005])
+        print("---")
         print_list(test_results[9990:9995])
         total = 0
         for (x, y) in test_results:

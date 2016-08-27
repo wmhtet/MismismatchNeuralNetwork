@@ -98,6 +98,7 @@ def string_to_out_put_index(str_data, print_flag=None):
     return u_int_array
 
 
+# Create a solution set that is sorted for comparison
 def multiple_sorted_int_array(str_data):
     sln_array = str_data.split("|")
     sln_set = set()
