@@ -14,7 +14,7 @@ import network
 def load_data():
     f = open('../data/MMM_NN_TRAING_DATA', 'r')
     string_tuple_list = []
-    print("2")
+    print("3")
     for line in f:
         inout = line.rstrip().split(":")
         string_tuple_list.append((inout[0], inout[1]))
