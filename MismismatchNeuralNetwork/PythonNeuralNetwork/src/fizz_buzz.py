@@ -6,11 +6,7 @@ import tensorflow as tf
 import random
 import mmm_loader
 
-NUM_DIGITS = 10
-OUTPUT_WIDTH = 4
-
-# How many units in the hidden layer.
-NUM_HIDDEN = 100
+NUM_DIGITS = 144
 
 # Represent each input by an array of its binary digits.
 def binary_encode(i, num_digits):
@@ -26,13 +22,11 @@ def fizz_buzz_encode(i):
 # Our goal is to produce fizzbuzz for the numbers 1 to 100. So it would be
 # unfair to include these in our training data. Accordingly, the training data
 # corresponds to the numbers 101 to (2 ** NUM_DIGITS - 1).
-trX = np.array([binary_encode(i, NUM_DIGITS) for i in range(101, 2 ** NUM_DIGITS)])
-trY = np.array([fizz_buzz_encode(i)          for i in range(101, 2 ** NUM_DIGITS)])
-print(trX)
-print(trY)
-# training_data, validation_data, test_data = mmm_loader.load_data()
-# trX = [i[0] for i in training_data]
-# trY = [i[1] for i in training_data]
+# trX = np.array([binary_encode(i, NUM_DIGITS) for i in range(101, 2 ** NUM_DIGITS)])
+# trY = np.array([fizz_buzz_encode(i)          for i in range(101, 2 ** NUM_DIGITS)])
+training_data, validation_data, test_data = mmm_loader.load_data()
+trX = [i[0] for i in training_data]
+trY = [i[1] for i in training_data]
 
 # We'll want to randomly initialize weights.
 def init_weights(shape):
@@ -47,12 +41,14 @@ def model(X, w_h, w_o):
 
 # Our variables. The input has width NUM_DIGITS, and the output has width 4.
 X = tf.placeholder("float", [None, NUM_DIGITS])
-Y = tf.placeholder("float", [None, OUTPUT_WIDTH])
+Y = tf.placeholder("float", [None, 12])
 
+# How many units in the hidden layer.
+NUM_HIDDEN = 72
 
 # Initialize the weights.
 w_h = init_weights([NUM_DIGITS, NUM_HIDDEN])
-w_o = init_weights([NUM_HIDDEN, OUTPUT_WIDTH])
+w_o = init_weights([NUM_HIDDEN, 12])
 
 # Predict y given x using the model.
 py_x = model(X, w_h, w_o)
@@ -75,12 +71,12 @@ BATCH_SIZE = 128
 with tf.Session() as sess:
     tf.initialize_all_variables().run()
 
-    for epoch in range(10000):
+    for epoch in range(10):
         # Shuffle the data before each training iteration.
-        p = np.random.permutation(range(len(trX)))
-        trX, trY = trX[p], trY[p]
-        # random.shuffle(trX)
-        # random.shuffle(trY)
+        # p = np.random.permutation(range(len(trX)))
+        # trX, trY = trX[p], trY[p]
+        random.shuffle(trX)
+        random.shuffle(trY)
 
         # Train in batches of 128 inputs.
         for start in range(0, len(trX), BATCH_SIZE):
