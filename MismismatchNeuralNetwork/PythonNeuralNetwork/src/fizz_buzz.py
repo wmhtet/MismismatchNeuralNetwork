@@ -75,7 +75,7 @@ BATCH_SIZE = 128
 with tf.Session() as sess:
     tf.initialize_all_variables().run()
 
-    for epoch in range(10):
+    for epoch in range(10000):
         # Shuffle the data before each training iteration.
         # p = np.random.permutation(range(len(trX)))
         # trX, trY = trX[p], trY[p]
