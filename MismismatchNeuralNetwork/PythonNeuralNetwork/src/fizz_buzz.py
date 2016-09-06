@@ -7,6 +7,10 @@ import random
 import mmm_loader
 
 NUM_DIGITS = 144
+OUTPUT_WIDTH = 12
+
+# How many units in the hidden layer.
+NUM_HIDDEN = 72
 
 # Represent each input by an array of its binary digits.
 def binary_encode(i, num_digits):
@@ -43,14 +47,12 @@ def model(X, w_h, w_o):
 
 # Our variables. The input has width NUM_DIGITS, and the output has width 4.
 X = tf.placeholder("float", [None, NUM_DIGITS])
-Y = tf.placeholder("float", [None, 12])
+Y = tf.placeholder("float", [None, OUTPUT_WIDTH])
 
-# How many units in the hidden layer.
-NUM_HIDDEN = 72
 
 # Initialize the weights.
 w_h = init_weights([NUM_DIGITS, NUM_HIDDEN])
-w_o = init_weights([NUM_HIDDEN, 12])
+w_o = init_weights([NUM_HIDDEN, OUTPUT_WIDTH])
 
 # Predict y given x using the model.
 py_x = model(X, w_h, w_o)
