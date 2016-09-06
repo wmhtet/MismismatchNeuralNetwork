@@ -25,8 +25,10 @@ def fizz_buzz_encode(i):
 # trX = np.array([binary_encode(i, NUM_DIGITS) for i in range(101, 2 ** NUM_DIGITS)])
 # trY = np.array([fizz_buzz_encode(i)          for i in range(101, 2 ** NUM_DIGITS)])
 training_data, validation_data, test_data = mmm_loader.load_data()
-trX = [i[0] for i in training_data]
-trY = [i[1] for i in training_data]
+trX = [i[0].flatten() for i in training_data]
+trY = [i[1].flatten() for i in training_data]
+print(trX[0])
+print(trY[0])
 
 # We'll want to randomly initialize weights.
 def init_weights(shape):
