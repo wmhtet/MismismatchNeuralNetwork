@@ -28,9 +28,9 @@ def fizz_buzz_encode(i):
 # corresponds to the numbers 101 to (2 ** NUM_DIGITS - 1).
 # trX = np.array([binary_encode(i, NUM_DIGITS) for i in range(101, 2 ** NUM_DIGITS)])
 # trY = np.array([fizz_buzz_encode(i)          for i in range(101, 2 ** NUM_DIGITS)])
-training_data, validation_data, test_data = mmm_loader.load_data()
-trX = [i[0].flatten() for i in training_data]
-trY = [i[1].flatten() for i in training_data]
+training_data, validation_data, test_data = mmm_loader.load_data_num_sol()
+trX = np.array([i[0].flatten() for i in training_data])
+trY = np.array([i[1].flatten() for i in training_data])
 print(trX[0])
 print(trY[0])
 
@@ -77,10 +77,10 @@ with tf.Session() as sess:
 
     for epoch in range(10000):
         # Shuffle the data before each training iteration.
-        # p = np.random.permutation(range(len(trX)))
-        # trX, trY = trX[p], trY[p]
-        random.shuffle(trX)
-        random.shuffle(trY)
+        p = np.random.permutation(range(len(trX)))
+        trX, trY = trX[p], trY[p]
+        # random.shuffle(trX)
+        # random.shuffle(trY)
 
         # Train in batches of 128 inputs.
         for start in range(0, len(trX), BATCH_SIZE):

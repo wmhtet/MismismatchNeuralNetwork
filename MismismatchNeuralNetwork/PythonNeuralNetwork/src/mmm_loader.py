@@ -59,11 +59,11 @@ def print_data(string_tuple_list, training_data, validation_data, test_data, pri
     # print (data_list[0])
     print(formatted)
     print(formatted2)
-    network.print_list(string_tuple_list[20002:20007])
-    print_flatten_tuple_list(training_data[0:5])
+    network.print_list(string_tuple_list[20059:20064])
+    print_flatten_tuple_list(training_data[57:62])
 
-    network.print_list(string_tuple_list[0:5])
-    print_flatten_tuple_list_(test_data[0:5])
+    network.print_list(string_tuple_list[30:35])
+    print_flatten_tuple_list_(test_data[30:35])
 
     print_answer_number_count_list(training_data, "training_data")
     print_answer_number_count(test_data, "test_data")
@@ -133,7 +133,7 @@ def load_data_num_sol():
     test_data = []
     for t in string_tuple_list[0:10000]:
         count = 0
-        if(len(t[1]) != 0):
+        if len(t[1]) != 0:
             sln_array = t[1][:-1].split("|")
             count = len(sln_array)
         test_data.append((string_to_massaged_float_array(t[0]),  count))
