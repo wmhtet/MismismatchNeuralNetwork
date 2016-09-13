@@ -65,7 +65,7 @@ class Network(object):
                 self.update_mini_batch(mini_batch, eta)
             if test_data:
                 print("Epoch {0}: {1} / {2}".format(
-                    j, self.evaluate_multiple_solution(test_data), n_test))
+                    j, self.evaluate(test_data), n_test))
             else:
                 print("Epoch {0} complete".format(j))
 
@@ -120,6 +120,8 @@ class Network(object):
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
         return (nabla_b, nabla_w)
 
+    count = 0
+
     def evaluate(self, test_data):
         """Return the number of test inputs for which the neural
         network outputs the correct result. Note that the neural
@@ -129,7 +131,11 @@ class Network(object):
                         # np.argmax(self.feedforward(x))    # self.feedforward(x)
                         for (x, y) in test_data]
         # print(len(test_results))
-        print(test_results[0])
+        y = self.count + 15
+        # print(test_data[self.count][0].flatten())
+        # print(test_data[self.count][1])
+        print(test_results[self.count:y])
+        # self.count = y
         return sum(int(x == y) for (x, y) in test_results)
         # return 0, 0
 
