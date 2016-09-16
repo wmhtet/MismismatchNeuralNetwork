@@ -111,6 +111,135 @@ class MMM{
         return solutionSet
     }
     
+    static func createAllDifferentAttributeSolutions() -> Set<Set<String>> {
+        var solutionSet = Set<Set<String>>()
+        
+        func isSet(firstCard:String, secondCard:String, thridCard:String) -> Bool {
+            func isValid(pos:Int) -> Bool {
+                let firstCh = String(firstCard[firstCard.startIndex.advancedBy(pos)])
+                let secondCh = String(secondCard[secondCard.startIndex.advancedBy(pos)])
+                let thirdCh = String(thridCard[thridCard.startIndex.advancedBy(pos)])
+                
+                var count = 0
+                if(firstCh == secondCh) {
+                    count += 1
+                }
+                
+                if(secondCh == thirdCh){
+                    count += 1
+                }
+                
+                if(firstCh == thirdCh) {
+                    count += 1
+                }
+                
+                return count == 0
+            }
+            
+            if(!isValid(0)){
+                return false
+            }
+            
+            if(!isValid(1)){
+                return false
+            }
+            if(!isValid(2)){
+                return false
+            }
+            if(!isValid(3)){
+                return false
+            }
+            return true
+        }
+        
+        for firstCard in CARDS{
+            for secondCard in CARDS{
+                for thirdCard in CARDS{
+                    
+                    if (firstCard != secondCard && secondCard != thirdCard && firstCard != thirdCard) {
+                        if(isSet(firstCard,secondCard: secondCard,thridCard: thirdCard)){
+                            solutionSet.insert(Set(arrayLiteral: firstCard, secondCard, thirdCard))
+                        }
+                    }
+                }
+            }
+        }
+        print(SOLUTIONS.count)
+        print("---------")
+        printSoultionSet(solutionSet)
+        print(solutionSet.count)
+        return solutionSet
+    }
+    
+    static func createControlledAttributSolutions(controlledPos: Int) -> Set<Set<String>> {
+        var solutionSet = Set<Set<String>>()
+        
+        func isSet(firstCard:String, secondCard:String, thridCard:String, controlledPos: Int) -> Bool {
+            func isValid(pos:Int, same: Bool = false) -> Bool {
+                let firstCh = String(firstCard[firstCard.startIndex.advancedBy(pos)])
+                let secondCh = String(secondCard[secondCard.startIndex.advancedBy(pos)])
+                let thirdCh = String(thridCard[thridCard.startIndex.advancedBy(pos)])
+                
+                var count = 0
+                if(firstCh == secondCh) {
+                    count += 1
+                }
+                
+                if(secondCh == thirdCh){
+                    count += 1
+                }
+                
+                if(firstCh == thirdCh) {
+                    count += 1
+                }
+                
+                if(same){
+                    return count == 3
+                }
+                return (count == 0 || count == 3)
+            }
+            
+            if(!isValid(0, same: controlledPos == 0)){
+                return false
+            }
+            
+            if(!isValid(1, same:  controlledPos == 1)){
+                return false
+            }
+            if(!isValid(2, same:  controlledPos == 2)){
+                return false
+            }
+            if(!isValid(3, same:  controlledPos == 3)){
+                return false
+            }
+            return true
+        }
+        
+        for firstCard in CARDS{
+            for secondCard in CARDS{
+                for thirdCard in CARDS{
+                    
+                    if (firstCard != secondCard && secondCard != thirdCard && firstCard != thirdCard) {
+                        if(isSet(firstCard,secondCard: secondCard,thridCard: thirdCard, controlledPos: controlledPos)){
+                            solutionSet.insert(Set(arrayLiteral: firstCard, secondCard, thirdCard))
+                        }
+                    }
+                }
+            }
+        }
+        print(SOLUTIONS.count)
+        print("---------")
+        printSoultionSet(solutionSet)
+        print(solutionSet.count)
+        return solutionSet
+    }
+
+    static func printSoultionSet(solutionSet:Set<Set<String>>){
+        for sol in solutionSet{
+            print(sol.sort().joinWithSeparator(" "))
+        }
+    }
+    
     func checkSet(posList: [Int]) -> Bool{
         numberOfAttempts += 1
         if posList.count != 3 {return false}

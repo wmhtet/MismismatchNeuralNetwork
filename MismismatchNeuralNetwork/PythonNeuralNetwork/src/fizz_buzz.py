@@ -10,7 +10,7 @@ NUM_DIGITS = 144
 OUTPUT_WIDTH = 12
 
 # How many units in the hidden layer.
-NUM_HIDDEN = 72
+NUM_HIDDEN = 24
 
 # Represent each input by an array of its binary digits.
 def binary_encode(i, num_digits):
@@ -75,7 +75,7 @@ BATCH_SIZE = 128
 with tf.Session() as sess:
     tf.initialize_all_variables().run()
 
-    for epoch in range(10000):
+    for epoch in range(100):
         # Shuffle the data before each training iteration.
         p = np.random.permutation(range(len(trX)))
         trX, trY = trX[p], trY[p]

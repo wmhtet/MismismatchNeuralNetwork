@@ -44,7 +44,7 @@ func testNot(){
 }
 
 //fibonacci(13)
-testNot()
+// testNot()
 var mmm = MMM()
 mmm.setup()
 mmm.printBoardSet()
@@ -58,10 +58,11 @@ func loop(){
         loop()
     }
 }
-loop()
+// loop()
 mmm.printStat()
+// MMM.createAllDifferentAttributeSolutions()
 
-
+MMM.createControlledAttributSolutions(1)
 
 /*
  

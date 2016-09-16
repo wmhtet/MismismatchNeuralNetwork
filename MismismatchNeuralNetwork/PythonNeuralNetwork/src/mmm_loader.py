@@ -16,7 +16,7 @@ import datetime as dt
 def read_file():
     print(dt.datetime.now().minute)
     string_tuple_list = []
-    f = open('../data/MMM_NN_TRAING_DATA', 'r')
+    f = open('../data/ALL_DIFFERENT_ATTRIBUTE_TRAINING_DATA', 'r')
     for line in f:
         inout = line.rstrip().split(":")
         string_tuple_list.append((inout[0], inout[1]))
@@ -87,7 +87,7 @@ def print_flatten_tuple_list_(ls):
 def load_data():
     string_tuple_list = read_file()
     training_data = []
-    print_flag = True
+    print_flag = True        # 132805
     for t in string_tuple_list[20002:]:
         sln_array = t[1][:-1].split("|")
         for sln in sln_array:
@@ -270,11 +270,11 @@ def string_to_massaged_float_array(str_data, print_flag=None):
     np_array_data = np.array(u_int_array, dtype=np.float32).reshape((144, 1))
 
     if print_flag:
-        print("---------")
+        print("----string_to_massaged_float_array-----")
         print(str_data)
         print(u_int_array)
         print(np_array_data.flatten())
-        print("---------")
+        print("----string_to_massaged_float_array-----")
     # print(type(np_array_data))
     # return np_array_data.reshape(len(np_array_data), 1)
     return np_array_data
