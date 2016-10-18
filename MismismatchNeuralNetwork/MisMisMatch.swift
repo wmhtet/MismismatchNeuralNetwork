@@ -18,7 +18,7 @@ class MMM{
     private static let ROW = 4
     private static let COLUMN = 3
     private static let BOARD_SIZE = 12
-    private static let TRAINING_DATA_FILE_NAME = "MMM_NN_TRAING_DATA"
+    private static let TRAINING_DATA_FILE_NAME = "FIRST_MMM_NN_TRAING_DATA"//"MMM_NN_TRAING_DATA"
     private static let TRAINING_SIZE = 300000
     private static let CARDS:[String] = {
         return MMM.createCards()
