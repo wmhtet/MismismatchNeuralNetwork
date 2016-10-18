@@ -13,20 +13,28 @@ import datetime as dt
 # net.SGD(training_data, 30, 10, 3.0, test_data=test_data)
 
 
+OUTPUT_NODE = 12
+OUTPUT_UNROLL_NODE = 36
+
 def read_file():
     print(dt.datetime.now().minute)
     string_tuple_list = []
-    f = open('../data/ALL_DIFFERENT_ATTRIBUTE_TRAINING_DATA', 'r')
+    f = open('../data/MMM_NN_TRAING_DATA', 'r')   # MMM_NN_TRAING_DATA ALL_DIFFERENT_ATTRIBUTE_TRAINING_DATA
     for line in f:
-        inout = line.rstrip().split(":")
-        string_tuple_list.append((inout[0], inout[1]))
+        # use number less than 70 to limits the solution to 1
+        # or use big numbers like 1000 to remove that restriction
+        #
+        # or use number greater than 61<?> to strip the data with no solution
+        if len(line) > 61:
+            inout = line.rstrip().split(":")
+            string_tuple_list.append((inout[0], inout[1]))
     f.close()
     random.shuffle(string_tuple_list)
     return string_tuple_list
 
 
 def print_answer_number_count(data_list, param):
-    u_int_array = np.zeros(shape=(12, 1))
+    u_int_array = np.zeros(shape=(OUTPUT_NODE, 1))
     # print(u_int_array)
     print(data_list[0][1])
     for data in data_list:
@@ -39,7 +47,7 @@ def print_answer_number_count(data_list, param):
 
 
 def print_answer_number_count_list(data_list, param):
-    u_int_array = np.zeros(shape=(12, 1))
+    u_int_array = np.zeros(shape=(OUTPUT_NODE, 1))
     # print(u_int_array)
     print(data_list[0][1])
     for data in data_list:
@@ -65,8 +73,8 @@ def print_data(string_tuple_list, training_data, validation_data, test_data, pri
     network.print_list(string_tuple_list[30:35])
     print_flatten_tuple_list_(test_data[30:35])
 
-    print_answer_number_count_list(training_data, "training_data")
-    print_answer_number_count(test_data, "test_data")
+#    print_answer_number_count_list(training_data, "training_data")
+    # print_answer_number_count(test_data, "test_data")
     """
     w = open('../data/MASSAGED_DATA', 'w')
     for l in training_data:
@@ -89,7 +97,7 @@ def load_data():
     training_data = []
     print_flag = True        # 132805
     for t in string_tuple_list[20002:]:
-        sln_array = t[1][:-1].split("|")
+        sln_array = t[1].split("|")
         for sln in sln_array:
             sln_int_array = string_to_out_put_index(sln, print_flag)
             training_data.append((string_to_massaged_float_array(t[0], print_flag), sln_int_array))
@@ -145,6 +153,37 @@ def load_data_num_sol():
     random.shuffle(test_data)
     return training_data, validation_data, test_data
 
+
+def load_data_output_unroll():
+    string_tuple_list = read_file()
+    training_data = []
+    print_flag = True        # 132805
+    for t in string_tuple_list[20002:]:
+        sln_array = t[1].split("|")
+        for sln in sln_array:
+            sln_int_array = string_to_out_put_index_unroll(sln, print_flag)
+            training_data.append((string_to_massaged_float_array(t[0], print_flag), sln_int_array))
+            print_flag = False
+
+    validation_data = []
+    for t in string_tuple_list[10001:20001]:
+        validation_data.append((string_to_massaged_float_array(t[0]),  multiple_sorted_int_array(t[1])))
+
+    test_data = []
+    for t in string_tuple_list[0:10000]:
+        test_data.append((string_to_massaged_float_array(t[0]),  multiple_sorted_int_array(t[1])))
+
+    print_data(string_tuple_list, training_data, validation_data, test_data, print_flag)
+
+    random.shuffle(validation_data)
+    random.shuffle(training_data)
+    random.shuffle(test_data)
+    # training_data, validation_data, test_data = data_list, data_list[10001:20001], data_list[0:10000]
+    # net = network.Network([input_length, 49, output_length])
+    # net.SGD(training_data, 30, 10, 3.0, test_data=test_data)
+    return training_data, validation_data, test_data
+
+
 def multiple_slns_index(str_data):
     sln_array = str_data[:-1].split("|")
     u_int_array = np.zeros(shape=(120, 1))
@@ -179,7 +218,7 @@ def string_to_out_put_count(str_data):
 
 
 def string_to_out_put_count_array(str_data, print_flag=None):
-    u_int_array = np.zeros(shape=(12, 1))
+    u_int_array = np.zeros(shape=(OUTPUT_NODE, 1))
 
     if len(str_data) == 0:
         # print('.', end="", flush=True)
@@ -196,14 +235,36 @@ def string_to_out_put_count_array(str_data, print_flag=None):
 # answer string to  0,1 array of length 12 with index
 # which is present in the answer having value 1s while the rest having 0s
 def string_to_out_put_index(str_data, print_flag=None):
-    u_int_array = np.zeros(shape=(12, 1))
-
+    u_int_array = np.full((OUTPUT_NODE, 1), -1)
+    # print(str_data)
     if len(str_data) == 0:
         return u_int_array
     str_array = str_data.split(" ")
     for n in str_array:
         u_int_array[int(n)] = 1
     if(print_flag):
+        print("{0}:{1}".format(str_data, u_int_array.flatten()))
+    return u_int_array
+
+def str_to_int(str):
+    return int(str)
+
+
+# answer string to  0,1 array of length 36(12x3) with index
+# which is present in the answer having value 1 while the rest having 0s
+# in each 12 nodes section for 3 answers of 36 nodes output
+def string_to_out_put_index_unroll(str_data, print_flag=None):
+    u_int_array = np.full((OUTPUT_UNROLL_NODE, 1), -1)
+    # print(str_data)
+    if len(str_data) == 0:
+        return u_int_array
+    str_array = sorted(map(str_to_int, list(str_data.split(" "))))
+    pos = 0
+    for n in str_array:
+        u_int_array[n + (pos * OUTPUT_NODE)] = 1
+        pos += 1
+    if(print_flag):
+        print("string_to_out_put_index_unroll")
         print("{0}:{1}".format(str_data, u_int_array.flatten()))
     return u_int_array
 

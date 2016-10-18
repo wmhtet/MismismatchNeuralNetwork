@@ -65,7 +65,7 @@ class Network(object):
                 self.update_mini_batch(mini_batch, eta)
             if test_data:
                 print("Epoch {0}: {1} / {2}".format(
-                    j, self.evaluate(test_data), n_test))
+                    j, self.evaluate_output_unroll(test_data), n_test))
             else:
                 print("Epoch {0} complete".format(j))
 
@@ -176,6 +176,50 @@ class Network(object):
                 total += 1
         return total
         # return 0, 0
+
+    def chunks(self, l, n):
+        """Yield successive n-sized chunks from l."""
+        for i in range(0, len(l), n):
+            yield l[i:i + n]
+
+    def evaluate_output_unroll(self, test_data):
+        """Return the number of test inputs for which the neural
+        network outputs the correct result. Note that the neural
+        network's output is assumed to be the index of whichever
+        neuron in the final layer has the highest activation."""
+        test_results = []
+        to_print = []
+        for (x, y) in test_data:
+            temp = list(self.chunks(self.feedforward(x).flatten(), 12))
+            to_print = temp
+            tl0 = np.argsort(temp[0])
+            tl1 = np.argsort(temp[1])
+            tl2 = np.argsort(temp[2])
+            t0 = tl0[0]
+            t1 = tl1[0]
+            t2 = tl2[0]
+            if t0 == t1:
+                t1 = tl1[1]
+            if t1 == t2 or t0 == t2:
+                t2 = tl2[1]
+            test_results.append((sorted([t0, t1, t2]), y))
+            #test_results.append((sorted([np.argmax(temp[0]), np.argmax(temp[1]), np.argmax(temp[2])]), y))
+
+        # print(test_data[0:5])
+        # print_list(test_data[0:5])
+        #print_list(to_print)
+        print_list(test_results[0:5])
+        print("---")
+        print_list(test_results[5000:5005])
+        print("---")
+        print_list(test_results[9990:9995])
+        total = 0
+        for (x, y) in test_results:
+            t = (x[0], x[1], x[2])
+            # print(x)
+            if t in y:
+                total += 1
+        return total
 
 
     def cost_derivative(self, output_activations, y):
